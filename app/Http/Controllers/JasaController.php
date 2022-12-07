@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Barang;
+use App\Models\Jasa;
 
-class BarangController extends Controller
+class JasaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,12 @@ class BarangController extends Controller
      */
     public function index()
     {
-        $table = Barang::all();
-        return $table;
+        $table = Jasa::all();
+
+        return response()->json([
+            "message" => "Jasa Pengiriman anda :",
+            "data" => $table
+        ], 201);
     }
 
     /**
@@ -36,16 +40,14 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-        $table = Barang::create([
-            "nama" => $request->nama,
-            "deskripsi" => $request->deskripsi,
-            "harga" => $request->harga,
-            "kuantitas" => $request->kuantitas,
+        $table = Jasa::create([
+            "username" => $request->username,
+            "jasa" => $request->jasa,
         ]);
 
         return response()->json([
             'success' => 201,
-            'message' => 'data berhasil disimpan',
+            'message' => 'Jasa Pengiriman Dikirim',
             'data' => $table
         ], 201);
     }
@@ -58,17 +60,16 @@ class BarangController extends Controller
      */
     public function show($id)
     {
-        $barang = Barang::find($id);
-        if ($barang) {
+        $jasa = Jasa::find($id);
+        if ($jasa) {
             return response()->json([
-                'status' => 200, 
-                'message' => "Data Ditemukan",
-                'data' => $barang
+                'status' => 200,
+                'data' => $jasa
             ], 200);
         } else {
             return response()->json([
                 'status' => 404,
-                'message'=> 'id ' . $id . ' Tidak Ditemukan'
+                'message' => 'id atas' . $id . 'tidak ditemukan'
             ], 404);
         }
     }
@@ -93,16 +94,14 @@ class BarangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $barang = Barang::find($id);
-        if ($barang) {
-            $barang->nama = $request->nama ? $request->nama : $produk->nama;
-            $barang->deskripsi = $request->deskripsi ? $request->deskripsi : $produk->deskripsi;
-            $barang->harga = $request->harga ? $request->harga : $produk->harga;
-            $barang->kuantitas = $request->kuantitas ? $request->kuantitas : $produk->kuantitas;
-            $barang->save();
+        $jasa = Jasa::find($id);
+        if ($jasa) {
+            $jasa->username = $request->username ? $request->username : $jasa->username;
+            $jasa->jasa = $request->jasa ? $request->jasa : $jasa->jasa;
+            $jasa->save();
             return response()->json([
                 'status' => 200,
-                'data' => $barang
+                'data' => $jasa
             ], 200);
         } else {
             return response()->json([
@@ -120,18 +119,17 @@ class BarangController extends Controller
      */
     public function destroy($id)
     {
-        $barang = Barang::where('id', $id)->first();
-        if($barang){
-            $barang->delete();
+        $jasa = Jasa::where('id', $id)->first();
+        if ($jasa) {
+            $jasa->delete();
             return response()->json([
-                'status' => 200, 
-                'message'=> 'id ' . $id . ' berhasil di hapus',
-                'data' => $barang
+                'status' => 200,
+                'message' => 'jasa pengiriman berhasil dihapus'
             ], 200);
         } else {
             return response()->json([
                 'status' => 404,
-                'message' => 'id' . $id . ' tidak ditemukan'
+                'message' => 'id atas' . $id . 'tidak ditemukan'
             ], 404);
         }
     }

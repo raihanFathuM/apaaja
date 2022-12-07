@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Barang;
+use App\Models\Alamat;
 
-class BarangController extends Controller
+class AlamatController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,12 @@ class BarangController extends Controller
      */
     public function index()
     {
-        $table = Barang::all();
-        return $table;
+        $table = Alamat::all();
+
+        return response()->json([
+            "message" => "Alamat anda :",
+            "data" => $table
+        ], 201);
     }
 
     /**
@@ -36,11 +40,8 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-        $table = Barang::create([
-            "nama" => $request->nama,
-            "deskripsi" => $request->deskripsi,
-            "harga" => $request->harga,
-            "kuantitas" => $request->kuantitas,
+        $table = Alamat::create([
+            "alamat" => $request->alamat,
         ]);
 
         return response()->json([
@@ -58,17 +59,16 @@ class BarangController extends Controller
      */
     public function show($id)
     {
-        $barang = Barang::find($id);
-        if ($barang) {
+        $alamat = Alamat::find($id);
+        if ($alamat) {
             return response()->json([
-                'status' => 200, 
-                'message' => "Data Ditemukan",
-                'data' => $barang
+                'status' => 200,
+                'data' => $alamat
             ], 200);
         } else {
             return response()->json([
                 'status' => 404,
-                'message'=> 'id ' . $id . ' Tidak Ditemukan'
+                'message' => 'id atas' . $id . 'tidak ditemukan'
             ], 404);
         }
     }
@@ -93,16 +93,14 @@ class BarangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $barang = Barang::find($id);
-        if ($barang) {
-            $barang->nama = $request->nama ? $request->nama : $produk->nama;
-            $barang->deskripsi = $request->deskripsi ? $request->deskripsi : $produk->deskripsi;
-            $barang->harga = $request->harga ? $request->harga : $produk->harga;
-            $barang->kuantitas = $request->kuantitas ? $request->kuantitas : $produk->kuantitas;
-            $barang->save();
+        $alamat = Alamat::find($id);
+        if ($alamat) {
+            $alamat->alamat = $request->alamat ? $request->alamat : $alamat->alamat;
+            $alamat->save();
             return response()->json([
                 'status' => 200,
-                'data' => $barang
+                'data' => $alamat,
+                'message' => 'Alamat berhasil dirubah'
             ], 200);
         } else {
             return response()->json([
@@ -120,18 +118,17 @@ class BarangController extends Controller
      */
     public function destroy($id)
     {
-        $barang = Barang::where('id', $id)->first();
-        if($barang){
-            $barang->delete();
+        $alamat = Alamat::where('id', $id)->first();
+        if ($alamat) {
+            $alamat->delete();
             return response()->json([
-                'status' => 200, 
-                'message'=> 'id ' . $id . ' berhasil di hapus',
-                'data' => $barang
+                'status' => 200,
+                'message' => 'Alamat berhasil dihapus'
             ], 200);
         } else {
             return response()->json([
                 'status' => 404,
-                'message' => 'id' . $id . ' tidak ditemukan'
+                'message' => 'id atas' . $id . 'tidak ditemukan'
             ], 404);
         }
     }
