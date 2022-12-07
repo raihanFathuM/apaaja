@@ -14,8 +14,8 @@ class BarangController extends Controller
      */
     public function index()
     {
-        $table = Barang::all();
-        return $table;
+        $barang = Barang::all();
+        return $barang;
     }
 
     /**
@@ -36,17 +36,19 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-        $table = Barang::create([
-            "nama" => $request->nama,
-            "deskripsi" => $request->deskripsi,
-            "harga" => $request->harga,
-            "kuantitas" => $request->kuantitas,
+        $barang = Barang::create([
+            "name" => $request->name,
+            "price" => $request->price,
+            "code" => $request->code,
+            "description" => $request->description,
+            "date_of_entry" => $request->date_of_entry,
+            "date_of_out" => $request->date_of_out,
         ]);
 
         return response()->json([
             'success' => 201,
             'message' => 'data berhasil disimpan',
-            'data' => $table
+            'data' => $barang
         ], 201);
     }
 
@@ -95,10 +97,12 @@ class BarangController extends Controller
     {
         $barang = Barang::find($id);
         if ($barang) {
-            $barang->nama = $request->nama ? $request->nama : $produk->nama;
-            $barang->deskripsi = $request->deskripsi ? $request->deskripsi : $produk->deskripsi;
-            $barang->harga = $request->harga ? $request->harga : $produk->harga;
-            $barang->kuantitas = $request->kuantitas ? $request->kuantitas : $produk->kuantitas;
+            $barang->name = $request->name ? $request->name : $barang->name;
+            $barang->price = $request->price ? $request->price : $barang->price;
+            $barang->code = $request->code ? $request->code : $barang->code;
+            $barang->description = $request->description ? $request->description : $barang->description;
+            $barang->date_of_entry = $request->date_of_entry ? $request->date_of_entry : $barang->date_of_entry;
+            $barang->date_of_out = $request->date_of_out ? $request->date_of_out : $barang->date_of_out;
             $barang->save();
             return response()->json([
                 'status' => 200,

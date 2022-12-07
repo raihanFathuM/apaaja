@@ -14,11 +14,11 @@ class AlamatController extends Controller
      */
     public function index()
     {
-        $table = Alamat::all();
+        $alamat = Alamat::all();
 
         return response()->json([
             "message" => "Alamat anda :",
-            "data" => $table
+            "data" => $alamat
         ], 201);
     }
 
@@ -40,14 +40,14 @@ class AlamatController extends Controller
      */
     public function store(Request $request)
     {
-        $table = Alamat::create([
+        $alamat = Alamat::create([
             "alamat" => $request->alamat,
         ]);
 
         return response()->json([
             'success' => 201,
             'message' => 'data berhasil disimpan',
-            'data' => $table
+            'data' => $alamat
         ], 201);
     }
 

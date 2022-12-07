@@ -32,6 +32,6 @@ class CreateBarangsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExist('Barang');
+        Schema::dropIfExist('barangs');
     }
 }

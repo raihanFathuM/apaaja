@@ -14,11 +14,11 @@ class JasaController extends Controller
      */
     public function index()
     {
-        $table = Jasa::all();
+        $jasa = Jasa::all();
 
         return response()->json([
             "message" => "Jasa Pengiriman anda :",
-            "data" => $table
+            "data" => $jasa
         ], 201);
     }
 
@@ -40,7 +40,7 @@ class JasaController extends Controller
      */
     public function store(Request $request)
     {
-        $table = Jasa::create([
+        $jasa = Jasa::create([
             "username" => $request->username,
             "jasa" => $request->jasa,
         ]);
@@ -48,7 +48,7 @@ class JasaController extends Controller
         return response()->json([
             'success' => 201,
             'message' => 'Jasa Pengiriman Dikirim',
-            'data' => $table
+            'data' => $jasa
         ], 201);
     }
 
